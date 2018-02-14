@@ -1,47 +1,71 @@
 <?php
-use Phalcon\Di\FactoryDefault;
-
 error_reporting(E_ALL);
-
-define('BASE_PATH', dirname(__DIR__));
-define('APP_PATH', BASE_PATH . '/app');
-
-try {
-
+use Phalcon\Loader;
+use Phalcon\Mvc\Router;
+use Phalcon\DI\FactoryDefault;
+use Phalcon\Mvc\Application as BaseApplication;
+class Application extends BaseApplication
+{
     /**
-     * The FactoryDefault Dependency Injector automatically registers
-     * the services that provide a full stack framework.
+     * Register the services here to make them general or register in the ModuleDefinition to make them module-specific
      */
-    $di = new FactoryDefault();
+    protected function registerServices()
+    {
+        $di = new FactoryDefault();
+        $loader = new Loader();
+        /**
+         * We're a registering a set of directories taken from the configuration file
+         */
+        $loader
+            ->registerDirs([__DIR__ . '/../apps/library/'])
+            ->register();
+        // Registering a router
+        $di->set('router', function () {
+            $router = new Router();
+            $router->setDefaultModule("frontend");
 
-    /**
-     * Handle routes
-     */
-    include APP_PATH . '/config/router.php';
+            $router->add('/:controller/:action', [
+                'module'     => 'frontend',
+                'controller' => 'index',
+                'action'     => 'index',
+            ])->setName('frontend');
 
-    /**
-     * Read services
-     */
-    include APP_PATH . '/config/services.php';
+            $router->add("/login", [
+                'module'     => 'backend',
+                'controller' => 'index',
+                'action'     => 'index',
+            ])->setName('backend');
 
-    /**
-     * Get config service for use in inline setup below
-     */
-    $config = $di->getConfig();
-
-    /**
-     * Include Autoloader
-     */
-    include APP_PATH . '/config/loader.php';
-
-    /**
-     * Handle the request
-     */
-    $application = new \Phalcon\Mvc\Application($di);
-
-    echo str_replace(["\n","\r","\t"], '', $application->handle()->getContent());
-
-} catch (\Exception $e) {
-    echo $e->getMessage() . '<br>';
-    echo '<pre>' . $e->getTraceAsString() . '</pre>';
+            $router->add("/admin/pengguna/:action", [
+                'module'     => 'backend',
+                'controller' => 'pengguna',
+                'action'     => 1,
+            ])->setName('backend-product');
+            $router->add("/products/:action", [
+                'module'     => 'frontend',
+                'controller' => 'products',
+                'action'     => 1,
+            ])->setName('frontend-product');
+            return $router;
+        });
+        $this->setDI($di);
+    }
+    public function main()
+    {
+        $this->registerServices();
+        // Register the installed modules
+        $this->registerModules([
+            'frontend' => [
+                'className' => 'Siaframework\Frontend\Module',
+                'path'      => '../apps/frontend/Module.php'
+            ],
+            'backend'  => [
+                'className' => 'Siaframework\Backend\Module',
+                'path'      => '../apps/backend/Module.php'
+            ]
+        ]);
+        echo $this->handle()->getContent();
+    }
 }
+$application = new Application();
+$application->main();
