@@ -22,30 +22,32 @@ class Application extends BaseApplication
         // Registering a router
         $di->set('router', function () {
             $router = new Router();
-            $router->setDefaultModule("frontend");
+            $router->setDefaultModule("backend");
 
-            $router->add('/:controller/:action', [
-                'module'     => 'frontend',
-                'controller' => 'index',
-                'action'     => 'index',
-            ])->setName('frontend');
-
-            $router->add("/login", [
+            $router->add("/index/:action", [
                 'module'     => 'backend',
                 'controller' => 'index',
                 'action'     => 'index',
-            ])->setName('backend');
+            ])->setName('backend-index');
 
-            $router->add("/admin/pengguna/:action", [
+            $router->add("/login/:action", [
                 'module'     => 'backend',
-                'controller' => 'pengguna',
-                'action'     => 1,
-            ])->setName('backend-product');
-            $router->add("/products/:action", [
-                'module'     => 'frontend',
-                'controller' => 'products',
-                'action'     => 1,
-            ])->setName('frontend-product');
+                'controller' => 'login',
+                'action'     => 'index',
+            ])->setName('backend-login');
+
+             $router->add("/logout/:action", [
+                'module'     => 'backend',
+                'controller' => 'logout',
+                'action'     => 'index',
+            ])->setName('backend-logout');
+
+            $router->add("/dash/:action", [
+                'module'     => 'dashboard',
+                'controller' => 'dash',
+                'action'     => 'index',
+            ])->setName('dashboard-index');
+
             return $router;
         });
         $this->setDI($di);
@@ -55,16 +57,21 @@ class Application extends BaseApplication
         $this->registerServices();
         // Register the installed modules
         $this->registerModules([
-            'frontend' => [
-                'className' => 'Siaframework\Frontend\Module',
-                'path'      => '../apps/frontend/Module.php'
-            ],
             'backend'  => [
                 'className' => 'Siaframework\Backend\Module',
-                'path'      => '../apps/backend/Module.php'
+                'path'      => '../apps/modules/backend/module.php'
+            ],
+            'dashboard'  => [
+                'className' => 'Siaframework\Dashboard\Module',
+                'path'      => '../apps/modules/dashboard/module.php'
             ]
+            // 'services'  => [
+            //     'className' => 'Siaframework\Config\Services',
+            //     'path'      => '../apps/config/services.php'
+            // ]
         ]);
-        echo $this->handle()->getContent();
+        $response = $this->handle();
+        echo $response->getContent();
     }
 }
 $application = new Application();
