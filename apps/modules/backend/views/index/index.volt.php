@@ -5,7 +5,7 @@
     </head>
 
     <body>
-		<h1> Ini di modul backend HMVC, ini index</h1>
+		<h1> Ini di modul backend HMVC + RSP, ini index</h1>
         <?= $posts ?>
         <?= $posts2 ?>   
          <?= $posts3 ?>  

@@ -9,14 +9,12 @@ class User
         $this->repo = Repositories::getRepository('User');
     }
 
-    public function get($id) {
-
-        $this->repo->findById($id);
+    public function get($username) {
+        $this->repo->findById($username);
         return $this;
     }
 
     public function getAll() {
-
         $this->repo->find();
         return $this;
     }

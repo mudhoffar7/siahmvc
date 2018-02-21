@@ -11,8 +11,9 @@ class IndexController extends Controller
     	$this->view->posts2 = "2";
     	$this->view->posts3 = "3";
     	$this->view->posts4 = "4";
+		// $data = array();
 		$data = Services::getService('User')->getAll();
-		$this->view->dataa = $data;
+		$this->view->dataa = $data; 
     	 // echo '<pre>'; print_r($data); echo '</pre>';
     } 
 }
