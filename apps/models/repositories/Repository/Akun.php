@@ -1,14 +1,14 @@
 <?php
 namespace Siaframework\Models\Repositories\Repository;
-use Siaframework\Models\Entities\User as EntityUser;
-class User
+use Siaframework\Models\Entities\Akun as EntityAkun;
+class Akun
 {
   private $collection = array();
 	    private $entity = null;
 	    private $status = false;
 
 	    public function __construct() {
-	        $this->entity = new EntityUser();
+	        $this->entity = new EntityAkun();
 	    }
 
 	    private function buildParams($params = array()) {
@@ -16,12 +16,12 @@ class User
 	    }
 
 	    public function find() {
-	        $this->collection = EntityUser::find();
+	        $this->collection = EntityAkun::find();
 	        return $this;
 	    }
 
 	    public function findById($username) {
-	        $this->entity = EntityUser::findFirst($username);
+	        $this->entity = EntityAkun::findFirst($username);
 	        return $this;
 	    }
 

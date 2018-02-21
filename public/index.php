@@ -24,25 +24,31 @@ class Application extends BaseApplication
             $router = new Router();
             $router->setDefaultModule("backend");
 
-            $router->add("/index/:action", [
+            $router->add("/index/index", [
                 'module'     => 'backend',
                 'controller' => 'index',
                 'action'     => 'index',
             ])->setName('backend-index');
 
-            $router->add("/login/:action", [
+            $router->add("/login/index", [
                 'module'     => 'backend',
                 'controller' => 'login',
                 'action'     => 'index',
             ])->setName('backend-login');
 
-             $router->add("/logout/:action", [
+            $router->add("/login/login", [
+                'module'     => 'backend',
+                'controller' => 'login',
+                'action'     => 'login',
+            ])->setName('backend-login');
+
+             $router->add("/logout/index", [
                 'module'     => 'backend',
                 'controller' => 'logout',
                 'action'     => 'index',
             ])->setName('backend-logout');
 
-            $router->add("/dash/:action", [
+            $router->add("/dash/index", [
                 'module'     => 'dashboard',
                 'controller' => 'dash',
                 'action'     => 'index',
