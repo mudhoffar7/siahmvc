@@ -59,17 +59,57 @@ class Application extends BaseApplication
         $this->registerModules([
             'backend'  => [
                 'className' => 'Siaframework\Backend\Module',
-                'path'      => '../apps/modules/backend/module.php'
+                'path'      => '../apps/modules/backend/Module.php'
             ],
             'dashboard'  => [
                 'className' => 'Siaframework\Dashboard\Module',
-                'path'      => '../apps/modules/dashboard/module.php'
+                'path'      => '../apps/modules/dashboard/Module.php'
+            ],
+            'ekivalensi'  => [
+                'className' => 'Siaframework\Ekivalensi\Module',
+                'path'      => '../apps/modules/ekivalensi/Module.php'
+            ],
+            'ipd'  => [
+                'className' => 'Siaframework\Ipd\Module',
+                'path'      => '../apps/modules/ipd/Module.php'
+            ],
+            'kurikulum'  => [
+                'className' => 'Siaframework\Kurikulum\Module',
+                'path'      => '../apps/modules/kurikulum/Module.php'
+            ],
+            'pembelajaran'  => [
+                'className' => 'Siaframework\Pembelajaran\Module',
+                'path'      => '../apps/modules/pembelajaran/Module.php'
+            ],
+            'penilaian'  => [
+                'className' => 'Siaframework\Penilaian\Module',
+                'path'      => '../apps/modules/penilaian/Module.php'
+            ],
+            'penjadwalan'  => [
+                'className' => 'Siaframework\Penjadwalan\Module',
+                'path'      => '../apps/modules/penjadwalan/Module.php'
+            ],
+            'sar'  => [
+                'className' => 'Siaframework\Sar\Module',
+                'path'      => '../apps/modules/sar/Module.php'
+            ],
+            'skem'  => [
+                'className' => 'Siaframework\Skem\Module',
+                'path'      => '../apps/modules/skem/Module.php'
+            ],
+            'skpi'  => [
+                'className' => 'Siaframework\Skpi\Module',
+                'path'      => '../apps/modules/skpi/Module.php'
+            ],
+            'wisuda'  => [
+                'className' => 'Siaframework\Wisuda\Module',
+                'path'      => '../apps/modules/wisuda/Module.php'
+            ],
+            'yudisium'  => [
+                'className' => 'Siaframework\Yudisium\Module',
+                'path'      => '../apps/modules/yudisium/Module.php'
             ]
-            // 'services'  => [
-            //     'className' => 'Siaframework\Config\Services',
-            //     'path'      => '../apps/config/services.php'
-            // ]
-        ]);
+        ]);        
         $response = $this->handle();
         echo $response->getContent();
     }
